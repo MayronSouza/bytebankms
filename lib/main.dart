@@ -13,6 +13,9 @@ class BytebankApp extends StatelessWidget {
 
 // Formulário de Transferência
 class FormularioTransferencia extends StatelessWidget {
+  final TextEditingController _numeroContaController = TextEditingController();
+  final TextEditingController _valorController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +28,7 @@ class FormularioTransferencia extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _numeroContaController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Número da Conta',
@@ -37,6 +41,7 @@ class FormularioTransferencia extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _valorController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 icon: Icon(
@@ -58,7 +63,17 @@ class FormularioTransferencia extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            onPressed: () => print('Fui clicado!!!'),
+            onPressed: () {
+              print('Fui clicado!!!');
+              final String numeroConta = this._numeroContaController.text;
+              final double valor = double.tryParse(this._valorController.text);
+
+              if(numeroConta != null && valor != null) {
+                final _transferencia = Transferencia(valor, numeroConta);
+
+                debugPrint('$_transferencia');
+              }
+            },
           )
         ],
       ),
@@ -116,4 +131,7 @@ class Transferencia {
   final String accountNumber;
 
   Transferencia(this.value, this.accountNumber);
+
+  @override
+  String toString() => 'Transferencia(value: $value, accountNumber: $accountNumber)';
 }
