@@ -1,38 +1,65 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(
-      MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'Tranferências',
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => print('Fui clicado'),
-            child: Icon(Icons.add),
-          ),
-          body: ListaTransferencias(),
-        ),
-      ),
-    );
+void main() => runApp(BytebankApp());
 
-class ListaTransferencias extends StatelessWidget {
+class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ItemTransferencia(Transferencia(100.0, '1000')),
-        ItemTransferencia(Transferencia(200.0, '1002')),
-        ItemTransferencia(Transferencia(400.0, '2031')),
-        ItemTransferencia(Transferencia(100.0, '1007')),
-      ],
+    return MaterialApp(
+      home: FormularioTransferencia(),
     );
   }
 }
 
+// Formulário de Transferência
+class FormularioTransferencia extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Criando Tranferência'),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(),
+          TextField(),
+          RaisedButton(
+            onPressed: null,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// Lista as tranferências
+class ListaTransferencias extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Tranferências',
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          ItemTransferencia(Transferencia(100.0, '1004')),
+          ItemTransferencia(Transferencia(200.0, '1002')),
+          ItemTransferencia(Transferencia(400.0, '2031')),
+          ItemTransferencia(Transferencia(100.0, '1007')),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => print('Hot Reload está funcionando'),
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+// Cada item da lista de tranferências
 class ItemTransferencia extends StatelessWidget {
-  
   final Transferencia _transferencia;
 
   const ItemTransferencia(this._transferencia);
@@ -49,6 +76,7 @@ class ItemTransferencia extends StatelessWidget {
   }
 }
 
+// Uma transferência
 class Transferencia {
   final double value;
   final String accountNumber;
