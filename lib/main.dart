@@ -6,7 +6,7 @@ class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FormularioTransferencia(),
+      home: ListaTransferencias(),
     );
   }
 }
@@ -45,7 +45,7 @@ class FormularioTransferencia extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              criarTranferencia();
+              criarTranferencia(context);
             },
           )
         ],
@@ -53,14 +53,16 @@ class FormularioTransferencia extends StatelessWidget {
     );
   }
 
-  void criarTranferencia() {
+  void criarTranferencia(BuildContext context) {
     final String numeroConta = this._numeroContaController.text;
     final double valor = double.tryParse(this._valorController.text);
-    
+
     if (numeroConta != null && valor != null) {
-      final _transferencia = Transferencia(valor, numeroConta);
-    
-      debugPrint('$_transferencia');
+      final _transferenciaCriada = Transferencia(valor, numeroConta);
+
+      debugPrint('Criando Transferência');
+      debugPrint('$_transferenciaCriada');
+      Navigator.pop(context, _transferenciaCriada);
     }
   }
 }
@@ -112,8 +114,21 @@ class ListaTransferencias extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print('Hot Reload está funcionando'),
         child: Icon(Icons.add),
+        onPressed: () {
+          final Future<Transferencia> future = Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return FormularioTransferencia();
+              },
+            ),
+          );
+          future.then((transferencia) {
+            debugPrint('Tranferência recebido');
+            debugPrint('$transferencia');
+          });
+        },
       ),
     );
   }
