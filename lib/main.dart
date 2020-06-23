@@ -12,7 +12,16 @@ class BytebankApp extends StatelessWidget {
 }
 
 // Formulário de Transferência
-class FormularioTransferencia extends StatelessWidget {
+class FormularioTransferencia extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return FormularioTransferenciaState();
+  }
+}
+
+class FormularioTransferenciaState extends State<FormularioTransferencia> {
+
   final TextEditingController _numeroContaController = TextEditingController();
   final TextEditingController _valorController = TextEditingController();
 
@@ -23,32 +32,34 @@ class FormularioTransferencia extends StatelessWidget {
         backgroundColor: Colors.cyan,
         title: Text('Criando Tranferência'),
       ),
-      body: Column(
-        children: <Widget>[
-          Editor(
-              controlador: _numeroContaController,
-              rotulo: 'Numedo da Conta',
-              dica: '0000'),
-          Editor(
-            controlador: _valorController,
-            rotulo: 'Valor',
-            dica: '0.00',
-            icone: Icons.monetization_on,
-          ),
-          RaisedButton(
-            color: Colors.cyan,
-            child: Text(
-              'Confirmar',
-              style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.white,
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Editor(
+                controlador: _numeroContaController,
+                rotulo: 'Numedo da Conta',
+                dica: '0000'),
+            Editor(
+              controlador: _valorController,
+              rotulo: 'Valor',
+              dica: '0.00',
+              icone: Icons.monetization_on,
             ),
-            onPressed: () {
-              criarTranferencia(context);
-            },
-          )
-        ],
+            RaisedButton(
+              color: Colors.cyan,
+              child: Text(
+                'Confirmar',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                criarTranferencia(context);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
@@ -65,6 +76,7 @@ class FormularioTransferencia extends StatelessWidget {
       Navigator.pop(context, _transferenciaCriada);
     }
   }
+
 }
 
 class Editor extends StatelessWidget {
@@ -133,10 +145,14 @@ class ListaTransferenciasState extends State<ListaTransferencias> {
             ),
           );
           future.then((transferencia) {
-            widget._transferencia.add(transferencia);
             debugPrint('Tranferência recebido');
             debugPrint('$transferencia');
-            setState(() {});
+
+            if (transferencia != null) {
+              setState(() {
+                widget._transferencia.add(transferencia);
+              });
+            }
           });
         },
       ),
