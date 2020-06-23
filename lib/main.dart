@@ -6,6 +6,14 @@ class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.purple[900],
+        accentColor: Colors.purple[900],
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.purple[900],
+          textTheme: ButtonTextTheme.primary,
+        ),
+      ),
       home: ListaTransferencias(),
     );
   }
@@ -13,7 +21,6 @@ class BytebankApp extends StatelessWidget {
 
 // Formulário de Transferência
 class FormularioTransferencia extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return FormularioTransferenciaState();
@@ -21,7 +28,6 @@ class FormularioTransferencia extends StatefulWidget {
 }
 
 class FormularioTransferenciaState extends State<FormularioTransferencia> {
-
   final TextEditingController _numeroContaController = TextEditingController();
   final TextEditingController _valorController = TextEditingController();
 
@@ -29,7 +35,6 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyan,
         title: Text('Criando Tranferência'),
       ),
       body: SingleChildScrollView(
@@ -46,12 +51,10 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
               icone: Icons.monetization_on,
             ),
             RaisedButton(
-              color: Colors.cyan,
               child: Text(
                 'Confirmar',
                 style: TextStyle(
                   fontSize: 24.0,
-                  color: Colors.white,
                 ),
               ),
               onPressed: () {
@@ -76,7 +79,6 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
       Navigator.pop(context, _transferenciaCriada);
     }
   }
-
 }
 
 class Editor extends StatelessWidget {
