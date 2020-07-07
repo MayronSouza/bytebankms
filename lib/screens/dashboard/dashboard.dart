@@ -1,6 +1,7 @@
 import 'package:bytebankms/models/saldo.dart';
 import 'package:bytebankms/screens/dashboard/saldo_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -9,9 +10,23 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(
         title: Text('BytebankMS'),
       ),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: SaldoCard(),
+      body: ListView(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.topCenter,
+            child: SaldoCard(),
+          ),
+          Consumer<Saldo>(
+            builder: (context, saldo, child) {
+              return RaisedButton(
+                child: Text('Adiciona'),
+                onPressed: () {
+                  saldo.adiciona(10);
+                },
+              );
+            },
+          )
+        ],
       ),
     );
   }
