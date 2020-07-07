@@ -1,5 +1,6 @@
 import 'package:bytebankms/models/saldo.dart';
 import 'package:bytebankms/screens/dashboard/saldo_card.dart';
+import 'package:bytebankms/screens/deposito/formulario.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +20,16 @@ class Dashboard extends StatelessWidget {
           Consumer<Saldo>(
             builder: (context, saldo, child) {
               return RaisedButton(
-                child: Text('Adiciona'),
+                child: Text('Receber depósito'),
                 onPressed: () {
-                  saldo.adiciona(10);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return FormularioDeposito();
+                      },
+                    ),
+                  );
                 },
               );
             },
