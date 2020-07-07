@@ -11,9 +11,7 @@ class Dashboard extends StatelessWidget {
       ),
       body: Align(
         alignment: Alignment.topCenter,
-        child: SaldoCard(
-          Saldo(200.0),
-        ),
+        child: SaldoCard(),
       ),
     );
   }
