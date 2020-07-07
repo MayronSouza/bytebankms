@@ -1,4 +1,5 @@
 import 'package:bytebankms/models/saldo.dart';
+import 'package:bytebankms/models/transferencias.dart';
 import 'package:bytebankms/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,9 @@ void main() => runApp(
           ChangeNotifierProvider(
             create: (context) => Saldo(0),
           ),
+          ChangeNotifierProvider(
+            create: (context) => Transaferencias(),
+          )
         ],
         child: BytebankApp(),
       ),
