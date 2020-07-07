@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-      ChangeNotifierProvider(
-        create: (context) => Saldo(0),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => Saldo(0),
+          ),
+        ],
         child: BytebankApp(),
       ),
     );
@@ -18,7 +22,7 @@ class BytebankApp extends StatelessWidget {
         primaryColor: Colors.purple[900],
         accentColor: Colors.purple[900],
         buttonTheme: ButtonThemeData(
-          buttonColor: Colors.purple[900],
+          buttonColor: Colors.purple[700],
           textTheme: ButtonTextTheme.primary,
         ),
       ),
