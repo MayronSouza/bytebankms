@@ -11,7 +11,7 @@ void main() => runApp(
             create: (context) => Saldo(0),
           ),
           ChangeNotifierProvider(
-            create: (context) => Transaferencias(),
+            create: (context) => Transferencias(),
           )
         ],
         child: BytebankApp(),

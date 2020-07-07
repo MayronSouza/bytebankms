@@ -1,7 +1,7 @@
 import 'package:bytebankms/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
-class Transaferencias extends ChangeNotifier {
+class Transferencias extends ChangeNotifier {
   final List<Transferencia> _transferencias = [];
 
   List<Transferencia> get transferencias => _transferencias;

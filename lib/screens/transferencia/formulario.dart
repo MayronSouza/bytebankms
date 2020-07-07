@@ -1,26 +1,22 @@
 // Formulário de Transferência
 import 'package:bytebankms/components/editor.dart';
+import 'package:bytebankms/models/saldo.dart';
 import 'package:bytebankms/models/transferencia.dart';
+import 'package:bytebankms/models/transferencias.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-const String textTitulo = 'Criando Tranferência';
+const String _tituloAppBar = 'Criando Tranferência';
 
-const String textRotuloNumeroConta = 'Numedo da Conta';
-const String textDicaNumeroConta = '0000';
+const String _rotuloNumeroConta = 'Numedo da Conta';
+const String _dicaNumeroConta = '0000';
 
-const String textRotuloValor = 'Valor';
-const String textDicaValor = '0.00';
+const String _rotuloValor = 'Valor';
+const String _dicaValor = '0.00';
 
-const String textButton = 'Confirmar';
+const String _textoBotao = 'Confirmar';
 
-class FormularioTransferencia extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return FormularioTransferenciaState();
-  }
-}
-
-class FormularioTransferenciaState extends State<FormularioTransferencia> {
+class FormularioTransferencia extends StatelessWidget {
   final TextEditingController _numeroContaController = TextEditingController();
   final TextEditingController _valorController = TextEditingController();
 
@@ -28,25 +24,25 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(textTitulo),
+        title: Text(_tituloAppBar),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Editor(
               controlador: _numeroContaController,
-              rotulo: textRotuloNumeroConta,
-              dica: textDicaNumeroConta,
+              rotulo: _rotuloNumeroConta,
+              dica: _dicaNumeroConta,
             ),
             Editor(
               controlador: _valorController,
-              rotulo: textRotuloValor,
-              dica: textDicaValor,
+              rotulo: _dicaValor,
+              dica: _rotuloValor,
               icone: Icons.monetization_on,
             ),
             RaisedButton(
               child: Text(
-                textButton,
+                _textoBotao,
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
@@ -64,11 +60,26 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
   void criarTranferencia(BuildContext context) {
     final String numeroConta = this._numeroContaController.text;
     final double valor = double.tryParse(this._valorController.text);
+    final transferenciaValida = _validaTransferencia(numeroConta, valor);
 
-    if (numeroConta != null && valor != null) {
-      final _transferenciaCriada = Transferencia(valor, numeroConta);
+    if (transferenciaValida) {
+      final novaTransferencia = Transferencia(valor, numeroConta);
 
-      Navigator.pop(context, _transferenciaCriada);
+      _atualizaEstado(context, novaTransferencia, valor);
+
+      Navigator.pop(context);
     }
+  }
+
+  _validaTransferencia(numeroConta, valor) {
+    final _camposPreenchidos = numeroConta != null && valor != null;
+
+    return _camposPreenchidos;
+  }
+
+  _atualizaEstado(context, novaTransferencia, valor) {
+    Provider.of<Transferencias>(context, listen: false)
+        .adiciona(novaTransferencia);
+    Provider.of<Saldo>(context, listen: false).subtrae(valor);
   }
 }
