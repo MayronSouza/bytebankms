@@ -1,6 +1,7 @@
 import 'package:bytebankms/screens/dashboard/saldo_card.dart';
 import 'package:bytebankms/screens/deposito/formulario.dart';
 import 'package:bytebankms/screens/transferencia/formulario.dart';
+import 'package:bytebankms/screens/transferencia/lista.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -46,6 +47,19 @@ class Dashboard extends StatelessWidget {
                 },
               ),
             ],
+          ),
+          RaisedButton(
+            child: Text('Transferências'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ListaTransferencias();
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
